@@ -17,6 +17,7 @@ export default function App() {
       <CssBaseline />
       <div className={classes.root}>
         <TextField
+          id="api-key"
           label="API Key"
           type="password"
           value={apiKey}
@@ -26,6 +27,7 @@ export default function App() {
           }}
         />
         <TextField
+          id="api-secret"
           label="Secret Key"
           type="password"
           value={secretKey}
