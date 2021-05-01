@@ -1,16 +1,18 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import theme from './theme'
-
-const storedApiKey = localStorage.getItem('apiKey') ?? ''
-const storedSecretKey = localStorage.getItem('secretKey') ?? ''
 
 export default function App() {
   const classes = useStyles()
-  const [apiKey, setApiKey] = useState(storedApiKey)
-  const [secretKey, setSecretKey] = useState(storedSecretKey)
+  const [apiKey, setApiKey] = useState('')
+  const [secretKey, setSecretKey] = useState('')
+
+  useEffect(() => {
+    setApiKey(localStorage.getItem('apiKey') ?? '')
+    setSecretKey(localStorage.getItem('secretKey') ?? '')
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
