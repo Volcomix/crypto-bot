@@ -5,7 +5,9 @@ import TextField from '@material-ui/core/TextField'
 import { useEffect, useState } from 'react'
 import theme from './theme'
 
-const encoder = new TextEncoder()
+function toBytes(data: string): Uint8Array {
+  return Uint8Array.from({ length: data.length }, (_, i) => data.charCodeAt(i))
+}
 
 function toHex(data: ArrayBuffer): string {
   return Array.from(new Uint8Array(data))
@@ -26,7 +28,7 @@ export default function App() {
   async function getAccountInformation() {
     const key = await crypto.subtle.importKey(
       'raw',
-      encoder.encode(secretKey),
+      toBytes(secretKey),
       { name: 'HMAC', hash: 'SHA-256' },
       true,
       ['sign']
@@ -36,7 +38,7 @@ export default function App() {
     const signature = await crypto.subtle.sign(
       'HMAC',
       key,
-      encoder.encode(queryString)
+      toBytes(queryString)
     )
     const response = await fetch(
       `/api/v3/account?${queryString}&signature=${toHex(signature)}`,
