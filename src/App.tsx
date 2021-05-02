@@ -19,6 +19,18 @@ type Bar = {
   takerBuyQuoteAssetVolume: number
 }
 
+type Ticker = {
+  eventType: string
+  eventTime: number
+  symbol: string
+  closePrice: number
+  openPrice: number
+  highPrice: number
+  lowPrice: number
+  totalTradedBaseAssetVolume: number
+  totalTradedQuoteAssetVolume: number
+}
+
 function toBytes(data: string): Uint8Array {
   return Uint8Array.from({ length: data.length }, (_, i) => data.charCodeAt(i))
 }
@@ -61,41 +73,80 @@ export default function App() {
     console.log(await response.json())
   }
 
-  async function test() {
-    const exchangeInfoResponse = await fetch('/api/v3/exchangeInfo')
-    console.log(await exchangeInfoResponse.json())
-    const klinesResponse = await fetch(
-      '/api/v3/klines?symbol=ETHBUSD&interval=5m'
+  async function subscribeToTickerStream() {
+    const stream = new WebSocket(
+      'wss://stream.binance.com:9443/ws/!miniTicker@arr'
     )
-    const klines: number[][] = await klinesResponse.json()
-    const bars = klines.map<Bar>(
-      ([
-        openTime,
-        open,
-        high,
-        low,
-        close,
-        volume,
-        closeTime,
-        quoteAssetVolume,
-        tradesCount,
-        takerBuyBaseAssetVolume,
-        takerBuyQuoteAssetVolume,
-      ]) => ({
-        openTime,
-        open,
-        high,
-        low,
-        close,
-        volume,
-        closeTime,
-        quoteAssetVolume,
-        tradesCount,
-        takerBuyBaseAssetVolume,
-        takerBuyQuoteAssetVolume,
-      })
-    )
-    console.log(bars)
+    const data: { [symbol: string]: Ticker } = {}
+    const startDate = Date.now()
+    stream.onmessage = async (ev) => {
+      let tickers: Ticker[] = JSON.parse(ev.data).map(
+        ({ e, E, s, c, o, h, l, v, q }: any): Ticker => ({
+          eventType: e,
+          eventTime: E,
+          symbol: s,
+          closePrice: Number(c),
+          openPrice: Number(o),
+          highPrice: Number(h),
+          lowPrice: Number(l),
+          totalTradedBaseAssetVolume: Number(v),
+          totalTradedQuoteAssetVolume: Number(q),
+        })
+      )
+      for (const ticker of tickers) {
+        if (ticker.symbol.endsWith('BUSD')) {
+          data[ticker.symbol] = ticker
+        }
+      }
+      console.log('Tickers loaded:', Object.keys(data).length)
+      if (Date.now() - startDate > 10000) {
+        stream.close()
+        const selectedTickers = Object.values(data)
+          .sort(
+            (a, b) =>
+              b.totalTradedQuoteAssetVolume - a.totalTradedQuoteAssetVolume
+          )
+          .slice(0, 3)
+        console.log(selectedTickers)
+
+        await Promise.all(
+          selectedTickers.map(async (ticker) => {
+            const klinesResponse = await fetch(
+              `/api/v3/klines?symbol=${ticker.symbol}&interval=5m`
+            )
+            const klines: number[][] = await klinesResponse.json()
+            const bars = klines.map<Bar>(
+              ([
+                openTime,
+                open,
+                high,
+                low,
+                close,
+                volume,
+                closeTime,
+                quoteAssetVolume,
+                tradesCount,
+                takerBuyBaseAssetVolume,
+                takerBuyQuoteAssetVolume,
+              ]) => ({
+                openTime,
+                open,
+                high,
+                low,
+                close,
+                volume,
+                closeTime,
+                quoteAssetVolume,
+                tradesCount,
+                takerBuyBaseAssetVolume,
+                takerBuyQuoteAssetVolume,
+              })
+            )
+            console.log(`${ticker.symbol}:`, bars)
+          })
+        )
+      }
+    }
   }
 
   return (
@@ -130,7 +181,14 @@ export default function App() {
             Get account information
           </Button>
         </div>
-        <Button variant="contained" color="primary" onClick={test}>
+        <Button variant="outlined" onClick={subscribeToTickerStream}>
+          Subscribe to ticker stream
+        </Button>
+        <Button
+          className={classes.mainAction}
+          variant="contained"
+          color="primary"
+        >
           Test
         </Button>
       </div>
@@ -142,12 +200,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
     display: 'grid',
+    gridAutoFlow: 'column',
     gridTemplateColumns: 'auto 1fr',
-    justifyItems: 'center',
-    alignItems: 'center',
+    gridTemplateRows: 'repeat(2, auto)',
+    rowGap: theme.spacing(3),
   },
   account: {
     display: 'grid',
     rowGap: theme.spacing(1),
+  },
+  mainAction: {
+    justifySelf: 'center',
+    alignSelf: 'center',
   },
 }))

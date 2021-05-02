@@ -33,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://testnet.binance.vision",
+  "proxy": "https://api.binance.com",
   "eslintConfig": {
     "extends": [
       "react-app",
