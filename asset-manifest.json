@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/crypto-bot/static/js/main.d37239ae.chunk.js",
-    "main.js.map": "/crypto-bot/static/js/main.d37239ae.chunk.js.map",
-    "runtime-main.js": "/crypto-bot/static/js/runtime-main.d826f6e4.js",
-    "runtime-main.js.map": "/crypto-bot/static/js/runtime-main.d826f6e4.js.map",
-    "static/js/2.5b41ec81.chunk.js": "/crypto-bot/static/js/2.5b41ec81.chunk.js",
-    "static/js/2.5b41ec81.chunk.js.map": "/crypto-bot/static/js/2.5b41ec81.chunk.js.map",
-    "static/js/3.b8267d94.chunk.js": "/crypto-bot/static/js/3.b8267d94.chunk.js",
-    "static/js/3.b8267d94.chunk.js.map": "/crypto-bot/static/js/3.b8267d94.chunk.js.map",
+    "main.js": "/crypto-bot/static/js/main.f3ab15c2.chunk.js",
+    "main.js.map": "/crypto-bot/static/js/main.f3ab15c2.chunk.js.map",
+    "runtime-main.js": "/crypto-bot/static/js/runtime-main.1cf2b180.js",
+    "runtime-main.js.map": "/crypto-bot/static/js/runtime-main.1cf2b180.js.map",
+    "static/js/2.d266bd22.chunk.js": "/crypto-bot/static/js/2.d266bd22.chunk.js",
+    "static/js/2.d266bd22.chunk.js.map": "/crypto-bot/static/js/2.d266bd22.chunk.js.map",
+    "static/js/3.cac22173.chunk.js": "/crypto-bot/static/js/3.cac22173.chunk.js",
+    "static/js/3.cac22173.chunk.js.map": "/crypto-bot/static/js/3.cac22173.chunk.js.map",
     "index.html": "/crypto-bot/index.html",
-    "static/js/2.5b41ec81.chunk.js.LICENSE.txt": "/crypto-bot/static/js/2.5b41ec81.chunk.js.LICENSE.txt"
+    "static/js/2.d266bd22.chunk.js.LICENSE.txt": "/crypto-bot/static/js/2.d266bd22.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d826f6e4.js",
-    "static/js/2.5b41ec81.chunk.js",
-    "static/js/main.d37239ae.chunk.js"
+    "static/js/runtime-main.1cf2b180.js",
+    "static/js/2.d266bd22.chunk.js",
+    "static/js/main.f3ab15c2.chunk.js"
   ]
 }
