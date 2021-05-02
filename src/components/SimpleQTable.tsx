@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import React, { useState } from 'react'
-import { readTickers } from '../api'
+import { readKlines, readTickers } from '../api'
 
 export default function SimpleQTable() {
   const classes = useStyles()
@@ -17,6 +17,12 @@ export default function SimpleQTable() {
       .slice(0, 3)
 
     console.log(selectedTickers)
+
+    const klines = await Promise.all(
+      selectedTickers.map(({ symbol }) => readKlines(symbol, '5m'))
+    )
+
+    console.log(klines)
 
     setLearning(false)
   }

@@ -1,4 +1,21 @@
-export type Bar = {
+export type KlineInterval =
+  | '1m'
+  | '3m'
+  | '5m'
+  | '15m'
+  | '30m'
+  | '1h'
+  | '2h'
+  | '4h'
+  | '6h'
+  | '8h'
+  | '12h'
+  | '1d'
+  | '3d'
+  | '1w'
+  | '1M'
+
+export type KlineBar = {
   openTime: number
   open: number
   high: number
@@ -7,7 +24,7 @@ export type Bar = {
   volume: number
   closeTime: number
   quoteAssetVolume: number
-  tradesCount: number
+  numberOfTrades: number
   takerBuyBaseAssetVolume: number
   takerBuyQuoteAssetVolume: number
 }

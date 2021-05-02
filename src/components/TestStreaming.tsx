@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button'
 import React from 'react'
-import { Bar, StreamingTicker } from '../types'
+import { readKlines } from '../api'
+import { StreamingTicker } from '../types'
 
 async function testStreaming() {
   const stream = new WebSocket(
@@ -40,38 +41,8 @@ async function testStreaming() {
 
       await Promise.all(
         selectedTickers.map(async (ticker) => {
-          const klinesResponse = await fetch(
-            `/api/v3/klines?symbol=${ticker.symbol}&interval=5m`
-          )
-          const klines: number[][] = await klinesResponse.json()
-          const bars = klines.map<Bar>(
-            ([
-              openTime,
-              open,
-              high,
-              low,
-              close,
-              volume,
-              closeTime,
-              quoteAssetVolume,
-              tradesCount,
-              takerBuyBaseAssetVolume,
-              takerBuyQuoteAssetVolume,
-            ]) => ({
-              openTime,
-              open,
-              high,
-              low,
-              close,
-              volume,
-              closeTime,
-              quoteAssetVolume,
-              tradesCount,
-              takerBuyBaseAssetVolume,
-              takerBuyQuoteAssetVolume,
-            })
-          )
-          console.log(`${ticker.symbol}:`, bars)
+          const klines = await readKlines(ticker.symbol, '5m')
+          console.log(`${ticker.symbol}:`, klines)
         })
       )
     }

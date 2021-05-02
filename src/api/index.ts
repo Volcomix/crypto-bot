@@ -1,4 +1,4 @@
-import { Ticker } from '../types'
+import { KlineBar, KlineInterval, Ticker } from '../types'
 
 export async function readTickers(): Promise<Ticker[]> {
   const tickersTimestamp = Number(localStorage.getItem('tickersTimestamp'))
@@ -36,4 +36,42 @@ export async function readTickers(): Promise<Ticker[]> {
   localStorage.setItem('tickers', JSON.stringify(tickers))
 
   return tickers
+}
+
+export async function readKlines(
+  symbol: string,
+  interval: KlineInterval
+): Promise<KlineBar[]> {
+  const klinesResponse = await fetch(
+    `/api/v3/klines?symbol=${symbol}&interval=${interval}`
+  )
+  const klinesRaw: any[][] = await klinesResponse.json()
+
+  return klinesRaw.map<KlineBar>(
+    ([
+      openTime,
+      open,
+      high,
+      low,
+      close,
+      volume,
+      closeTime,
+      quoteAssetVolume,
+      numberOfTrades,
+      takerBuyBaseAssetVolume,
+      takerBuyQuoteAssetVolume,
+    ]) => ({
+      openTime,
+      open: Number(open),
+      high: Number(high),
+      low: Number(low),
+      close: Number(close),
+      volume: Number(volume),
+      closeTime,
+      quoteAssetVolume: Number(quoteAssetVolume),
+      numberOfTrades,
+      takerBuyBaseAssetVolume: Number(takerBuyBaseAssetVolume),
+      takerBuyQuoteAssetVolume: Number(takerBuyQuoteAssetVolume),
+    })
+  )
 }
