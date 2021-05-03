@@ -45,22 +45,22 @@ export default function SimpleQTable() {
       </Button>
       <div className={classes.table}>
         {selectedSymbols.map((symbol) => (
-          <Typography key={`state-${symbol}-header`} variant="body2">
+          <Typography key={symbol} variant="body2">
             {symbol}
           </Typography>
         ))}
         {selectedSymbols.map((symbol) => (
-          <Typography key={`action-${symbol}-header`} variant="body1">
+          <Typography key={symbol} variant="body1">
             {symbol}
           </Typography>
         ))}
         {qValues.map((row, y) => (
-          <React.Fragment key={`state-${y}`}>
+          <React.Fragment key={y}>
             {selectedSymbols.map((symbol) => (
-              <Typography key={`state-${symbol}-${y}`} variant="body2" />
+              <Typography key={symbol} variant="body2" />
             ))}
             {row.map((qValue, x) => (
-              <Typography key={`action-${x}-${y}`} variant="body2">
+              <Typography key={x} variant="body2">
                 {qValue}
               </Typography>
             ))}
