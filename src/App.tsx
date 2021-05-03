@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridAutoFlow: 'column',
     gridTemplateColumns: 'auto 1fr',
-    gridTemplateRows: 'repeat(2, auto)',
+    gridTemplateRows: 'max-content auto',
+    alignItems: 'start',
     rowGap: theme.spacing(3),
   },
 }))

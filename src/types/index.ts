@@ -56,12 +56,12 @@ export type Ticker = {
   lowPrice: number
   volume: number
   quoteVolume: number
-  openTime: 1499783499040
-  closeTime: 1499869899040
+  openTime: number
+  closeTime: number
   /** First tradeId */
-  firstId: 28385
+  firstId: number
   /** Last tradeId */
-  lastId: 28460
+  lastId: number
   /** Trade count */
-  count: 76
+  count: number
 }
