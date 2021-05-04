@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import React, { useState } from 'react'
 import { readKlines, readTickers } from '../api'
 
@@ -56,8 +57,12 @@ export default function SimpleQTable() {
         ))}
         {qValues.map((row, y) => (
           <React.Fragment key={y}>
-            {selectedSymbols.map((symbol) => (
-              <Typography key={symbol} variant="body2" />
+            {selectedSymbols.map((symbol, i) => (
+              <Typography key={symbol} variant="body2">
+                <TrendingFlatIcon
+                  className={y & (2 ** i) ? classes.iconUp : classes.iconDown}
+                />
+              </Typography>
             ))}
             {row.map((qValue, x) => (
               <Typography key={x} variant="body2">
@@ -84,5 +89,13 @@ const useStyles = makeStyles((theme) => ({
     gap: theme.spacing(1),
     justifyItems: 'center',
     alignItems: 'center',
+  },
+  iconUp: {
+    color: theme.palette.success.main,
+    transform: 'rotate(-40deg)',
+  },
+  iconDown: {
+    color: theme.palette.error.main,
+    transform: 'rotate(40deg)',
   },
 }))
