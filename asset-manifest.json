@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/crypto-bot/static/js/main.cc9fff33.chunk.js",
-    "main.js.map": "/crypto-bot/static/js/main.cc9fff33.chunk.js.map",
+    "main.js": "/crypto-bot/static/js/main.5411cd51.chunk.js",
+    "main.js.map": "/crypto-bot/static/js/main.5411cd51.chunk.js.map",
     "runtime-main.js": "/crypto-bot/static/js/runtime-main.bb0b0d2f.js",
     "runtime-main.js.map": "/crypto-bot/static/js/runtime-main.bb0b0d2f.js.map",
     "static/js/2.f2152894.chunk.js": "/crypto-bot/static/js/2.f2152894.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.bb0b0d2f.js",
     "static/js/2.f2152894.chunk.js",
-    "static/js/main.cc9fff33.chunk.js"
+    "static/js/main.5411cd51.chunk.js"
   ]
 }
