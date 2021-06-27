@@ -1,8 +1,8 @@
 name: CI
 on: push
 jobs:
-  build:
-    name: Build and deploy
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,9 +13,3 @@ jobs:
 
       - name: Test
         run: yarn test
-
-      - name: Deploy
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: |
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
-          yarn deploy -u "GitHub Actions <github-actions@users.noreply.github.com>"
